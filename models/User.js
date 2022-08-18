@@ -6,12 +6,11 @@ const { Schema, model } = require('mongoose');
 const userSchema = new Schema(
   {
     username: {
-      type: Boolean,
+      type: String,
       default: false,
     },
     email: {
-      type: Date,
-      default: Date.now,
+      type: String,
     },
     thoughts: [
       {
@@ -44,5 +43,6 @@ userSchema
 
 // Initialize our Post model
 const User = model('User', userSchema);
+
 
 module.exports = User;
