@@ -8,7 +8,7 @@ module.exports = {
     },
     getSingleUser(req, res) {
       User.findOne({ _id: req.params.userId })
-        .select('-__v')
+        // .select('-__v')
         .populate('thoughts')
         .then((user) =>
           !user
@@ -25,8 +25,20 @@ module.exports = {
     },
 
     addFriend(req, res) {
-        User.findOneAndUpdate(req.params.userId, {
+        User.updateOne({_id: req.params.userId}, {
             $push: {friends: req.params.friendId}
+        }).then((data) => res.json(data))
+    },
+
+    deleteFriend(req, res) {
+        User.updateOne({_id: req.params.userId}, {
+            $pull: {friends: req.params.friendId}
+        }).then((data) => res.json(data))
+    },
+
+    updateUserById(req, res) {
+        User.updateOne({_id: req.params.userId}, {
+            username: req.body.username
         }).then((data) => res.json(data))
     }
 }
