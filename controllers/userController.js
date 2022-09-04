@@ -2,7 +2,7 @@ const User = require('../models/User');
 
 module.exports = {
     getUsers(req, res) {
-      User.find()
+      User.find().populate('thoughts')
         .then((users) => res.json(users))
         .catch((err) => res.status(500).json(err));
     },
@@ -40,5 +40,11 @@ module.exports = {
         User.updateOne({_id: req.params.userId}, {
             username: req.body.username
         }).then((data) => res.json(data))
-    }
+    },
+
+    deleteUserById(req, res) {
+        User.deleteOne({_id: req.params.userId}).then((data) => res.json(data))
+    },
+
+
 }

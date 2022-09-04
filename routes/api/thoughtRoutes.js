@@ -1,16 +1,20 @@
 const { Thought } = require('../../models');
-
+const {
+    getThoughts,
+    getSingleThought,
+    createThought,
+    updateThought,
+    deleteThought,
+    addReaction,
+    deleteReaction
+} = require('../../controllers/thoughtController')
 const router = require('express').Router();
 
-router.get('/', (req, res) => {
-    Thought.find({}, (err, result) => {
-        if (result) {
-            res.status(200).json(result);
-            } else {
-            console.log('Uh Oh, something went wrong');
-            res.status(500).json({ error: 'Something went wrong' });
-            }
-    })
-})
+router.route('/').get(getThoughts).post(createThought)
+
+router.route('/:thoughtId').get(getSingleThought).put(updateThought).delete(deleteThought)
+
+router.route('/:thoughtId/reactions').post(addReaction)
+router.route('/:thoughtId/reactions/:reactionId').delete(deleteReaction)
 
 module.exports = router;

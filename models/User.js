@@ -33,15 +33,15 @@ const userSchema = new Schema(
   }
 );
 
-// Create a virtual property `tagCount` that gets the amount of comments per user
+
 userSchema
   .virtual('friendCount')
-  // Getter
+
   .get(function () {
     return this.friends.length;
   });
 
-// Initialize our Post model
+
 const User = model('User', userSchema);
 
 
